@@ -16,6 +16,7 @@ namespace Nette\Neon;
 final class Neon
 {
 	const BLOCK = Encoder::BLOCK;
+	const REPLACER = 'replacer';
 
 	const CHAIN = '!!chain';
 
@@ -26,7 +27,9 @@ final class Neon
 	public static function encode($var, int $flags = 0): string
 	{
 		$encoder = new Encoder;
-		return $encoder->encode($var, $flags);
+		$encoder->replacer = isset($options[self::REPLACER]) ? $options[self::REPLACER] : null;
+		$block = !empty($options[self::BLOCK]) || $options === self::BLOCK;
+		return $encoder->encode($var, $block);
 	}
 
 
