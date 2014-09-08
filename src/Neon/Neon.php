@@ -16,7 +16,9 @@ namespace Nette\Neon;
 final class Neon
 {
 	const BLOCK = Encoder::BLOCK;
+
 	const REPLACER = 'replacer';
+	const REVIVER = 'reviver';
 
 	const CHAIN = '!!chain';
 
@@ -37,9 +39,10 @@ final class Neon
 	 * Decodes a NEON string.
 	 * @return mixed
 	 */
-	public static function decode(string $input)
+	public static function decode(string $input, array $options = null)
 	{
 		$decoder = new Decoder;
+		$decoder->reviver = isset($options[self::REVIVER]) ? $options[self::REVIVER] : null;
 		return $decoder->decode($input);
 	}
 }
